@@ -4,7 +4,7 @@ This project is a modernized implementation of a peer‑to‑peer Energy‑as‑
 
 ## Components
 
-- **Smart Contracts** (`contracts/`):
+ - **Smart Contracts** (`hardhat/`):
   - `EnergyCredit.sol`: ERC‑20 token representing energy credits (kWh).
   - `EnergyAsset.sol`: ERC‑721 NFT registry for physical energy assets (solar panels, batteries) with metadata (capacity, location).
   - `Marketplace.sol`: P2P trading of energy credits using ETH; sellers escrow tokens and buyers pay ETH.
@@ -42,7 +42,7 @@ Prerequisites: Node.js ≥ 18, Docker, and optionally `pnpm`/`npm` and `python3`
 
 ```bash
 # Install dependencies and start local chain
-cd contracts
+cd hardhat
 npm install
 npx hardhat node
 ```
@@ -51,7 +51,7 @@ In separate terminals:
 
 ```bash
 # Deploy contracts (example script)
-cd contracts
+cd hardhat
 npx hardhat run scripts/deploy.ts --network localhost
 
 # Start backend
