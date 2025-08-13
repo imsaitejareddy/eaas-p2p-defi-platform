@@ -44,6 +44,15 @@ services:
     volumes:
       - ./ai:/app
 
+  ai_ml:
+    build:
+      context: .
+      dockerfile: docker/ai-ml/Dockerfile
+    ports:
+      - '9000:9000'
+    volumes:
+      - ./ai-ml:/app
+
   frontend:
     build:
       context: .
