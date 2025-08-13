@@ -1,6 +1,14 @@
 {
   "name": "eaas-contracts",
   "version": "0.1.0",
-  "dependencies": {},
-  "devDependencies": {}
+  "scripts": {
+    "build": "npx hardhat compile",
+    "deploy": "npx hardhat run scripts/deploy.ts --network localhost"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^3.0.0",
+    "@openzeppelin/contracts": "^5.0.1",
+    "hardhat": "^2.20.0",
+    "typescript": "^5.1.6"
+  }
 }

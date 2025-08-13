@@ -1,28 +1,59 @@
 version: '3.9'
 services:
   postgres:
-    image: postgres:16-alpine
+    image: postgres:15
     environment:
       POSTGRES_USER: eaas
       POSTGRES_PASSWORD: eaas
       POSTGRES_DB: eaas
     ports:
-      - "5432:5432"
+      - '5432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
   contracts:
-    build: ./docker/contracts
+    build:
+      context: .
+      dockerfile: docker/contracts/Dockerfile
+    command: npx hardhat node
     ports:
-      - "8545:8545"
+      - '8545:8545'
+    volumes:
+      - ./contracts:/contracts
+
   backend:
-    build: ./docker/backend
-    ports:
-      - "8080:8080"
+    build:
+      context: .
+      dockerfile: docker/backend/Dockerfile
     environment:
       DATABASE_URL: postgresql://eaas:eaas@postgres:5432/eaas
+    ports:
+      - '8080:8080'
+    depends_on:
+      - postgres
+      - contracts
+    volumes:
+      - ./backend:/app
+
   ai:
-    build: ./docker/ai
+    build:
+      context: .
+      dockerfile: docker/ai/Dockerfile
     ports:
-      - "8000:8000"
+      - '8000:8000'
+    volumes:
+      - ./ai:/app
+
   frontend:
-    build: ./docker/frontend
+    build:
+      context: .
+      dockerfile: docker/frontend/Dockerfile
     ports:
-      - "5173:5173"
+      - '5173:5173'
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+
+volumes:
+  pgdata:

@@ -1,3 +1,6 @@
 FROM node:20-alpine
-WORKDIR /app
-CMD ["sh"]
+WORKDIR /contracts
+COPY contracts/package.json ./package.json
+RUN npm install
+COPY contracts ./
+CMD ["npx", "hardhat", "node"]
