@@ -1,0 +1,28 @@
+version: '3.9'
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: eaas
+      POSTGRES_PASSWORD: eaas
+      POSTGRES_DB: eaas
+    ports:
+      - "5432:5432"
+  contracts:
+    build: ./docker/contracts
+    ports:
+      - "8545:8545"
+  backend:
+    build: ./docker/backend
+    ports:
+      - "8080:8080"
+    environment:
+      DATABASE_URL: postgresql://eaas:eaas@postgres:5432/eaas
+  ai:
+    build: ./docker/ai
+    ports:
+      - "8000:8000"
+  frontend:
+    build: ./docker/frontend
+    ports:
+      - "5173:5173"
